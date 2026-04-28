@@ -22,9 +22,9 @@ runs:
       run: |
         cat <<EOF > ${{ inputs.cfgdir }}/groups.d/cluster.yaml
         cluster:
-          login: node[1-2]
-          compute: node[3-10]
-          all: @login,@compute
+          login: 'node[1-2]'
+          compute: 'node[3-10]'
+          all: '@login,@compute'
         EOF
     - name: touch empty file
       shell: bash
