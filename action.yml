@@ -15,16 +15,16 @@ runs:
 
     - name: Create ClusterShell config directories
       shell: bash
-      run: mkdir -p ${{ inputs.cfgdir }}/groups.conf.d
+      run: mkdir -p ${{ inputs.cfgdir }}/groups.d
 
     - name: Create basic cluster group yaml
       shell: bash
       run: |
-        cat <<EOF > ${{ inputs.cfgdir }}/groups.conf.d/cluster.yaml
+        cat <<EOF > ${{ inputs.cfgdir }}/groups.d/cluster.yaml
         cluster:
-          all: node[1-10]
           login: node[1-2]
           compute: node[3-10]
+          all: @login,@compute
         EOF
     - name: touch empty file
       shell: bash
