@@ -5,6 +5,9 @@ inputs:
   cfgdir:
     description: 'ClusterShell configuration directory'
     default: $HOME/.config/clustershell
+  groupsource:
+    description: 'ClusterShell default groupsource'
+    default: example
 
 runs:
   using: "composite"
@@ -21,7 +24,7 @@ runs:
       shell: bash
       run: |
         cat <<EOF > ${{ inputs.cfgdir }}/groups.d/cluster.yaml
-        cluster:
+        example:
           login: 'node[1-2]'
           compute: 'node[3-10]'
           all: '@login,@compute'
@@ -34,7 +37,7 @@ runs:
       run: |
         cat <<EOF > ${{ inputs.cfgdir }}/groups.conf
         [Main]
-        default: cluster
+        default: ${{ inputs.groupsource }}
         confdir: ${{ inputs.cfgdir }}/groups.conf.d $CFGDIR/groups.conf.d
         autodir: ${{ inputs.cfgdir }}/groups.d $CFGDIR/groups.d
         EOF
