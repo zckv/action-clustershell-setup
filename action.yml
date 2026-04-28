@@ -23,7 +23,7 @@ runs:
     - name: Create basic example group yaml
       shell: bash
       run: |
-        cat <<EOF > ${{ inputs.cfgdir }}/groups.d/cluster.yaml
+        cat <<EOF > ${{ inputs.cfgdir }}/groups.d/example.yaml
         example:
           login: 'node[1-2]'
           compute: 'node[3-10]'

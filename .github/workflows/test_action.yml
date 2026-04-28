@@ -31,8 +31,8 @@ jobs:
               run: |
                 cat <<EOF > "$HOME/.config/clustershell/groups.d/cluster.yaml"
                 cluster:
-                    login: 'node[1-2]'
-                    compute: 'node[3-10]'
+                    login: 'cluster_node[1-2]'
+                    compute: 'cluster_node[3-10]'
                     all: '@login,@compute'
                 EOF
 
