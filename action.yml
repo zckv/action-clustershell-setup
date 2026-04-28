@@ -20,7 +20,7 @@ runs:
       shell: bash
       run: mkdir -p ${{ inputs.cfgdir }}/groups.d
 
-    - name: Create basic cluster group yaml
+    - name: Create basic example group yaml
       shell: bash
       run: |
         cat <<EOF > ${{ inputs.cfgdir }}/groups.d/cluster.yaml

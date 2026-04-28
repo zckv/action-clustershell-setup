@@ -5,7 +5,7 @@ on:
         branches: "*"
 
 jobs:
-    test:
+    test-simple:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
@@ -17,4 +17,29 @@ jobs:
                 tree "$HOME/.config/clustershell"
                 nodeset --groupsources
                 nodeset -L
+                nodeset -LL
+    test-with-file:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - name: Test ClusterShell setup action
+              uses: ./
+              with:
+                groupsource: cluster
+            - name: Create basic example group yaml
+              shell: bash
+              run: |
+                cat <<EOF > "$HOME/.config/clustershell/groups.d/cluster.yaml"
+                cluster:
+                    login: 'node[1-2]'
+                    compute: 'node[3-10]'
+                    all: '@login,@compute'
+                EOF
+
+            - name: Verify ClusterShell installation
+              shell: bash
+              run: |
+                tree "$HOME/.config/clustershell"
+                nodeset --groupsources
+                echo
                 nodeset -LL
