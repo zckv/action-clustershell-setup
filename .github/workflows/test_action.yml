@@ -1,0 +1,16 @@
+name: Test ClusterShell setup action
+
+on:
+    push:
+        branches: "*"
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+            - name: Test ClusterShell setup action
+              uses: ./.github/actions/setup-clustershell
+            - name: Verify ClusterShell installation
+              shell: bash
+              run: nodeset -L

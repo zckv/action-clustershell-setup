@@ -1,0 +1,35 @@
+name: 'Setup ClusterShell'
+description: 'Set up a ClusterShell environment to use the nodeset command'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install ClusterShell
+      shell: bash
+      run: pipx install clustershell
+
+    - name: Create ClusterShell config directories
+      shell: bash
+      run: mkdir -p $HOME/.config/clustershell/groups.conf.d
+
+    - name: Create basic cluster group yaml
+      shell: bash
+      run: |
+        cat <<EOF > $HOME/.config/clustershell/groups.conf.d/cluster.yaml
+        cluster:
+            nodes:
+                all: node[1-10]
+                login: node[1-2]
+                compute: node[3-10]
+        EOF
+
+    - name: Create main groups.conf
+      shell: bash
+      run: |
+        cat <<EOF > $HOME/.config/clustershell/groups.conf
+        [Main]
+        default: cluster
+
+        [cluster]
+        map: yaml: $HOME/.config/clustershell/groups.conf.d/cluster.yaml
+        EOF
