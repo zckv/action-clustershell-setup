@@ -22,6 +22,9 @@ runs:
                 login: node[1-2]
                 compute: node[3-10]
         EOF
+    - name: touch empty file
+      shell: bash
+      run: touch $HOME/.config/clustershell/groups
 
     - name: Create main groups.conf
       shell: bash
