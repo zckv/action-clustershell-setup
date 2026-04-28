@@ -34,7 +34,4 @@ runs:
         default: cluster
         confdir: $HOME/.config/clustershell/groups.conf.d $CFGDIR/groups.conf.d
         autodir: $HOME/.config/clustershell/groups.d $CFGDIR/groups.d
-
-        [cluster]
-        map: yaml: $HOME/.config/clustershell/groups.conf.d/cluster.yaml
         EOF

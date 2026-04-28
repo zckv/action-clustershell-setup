@@ -13,4 +13,7 @@ jobs:
               uses: ./
             - name: Verify ClusterShell installation
               shell: bash
-              run: nodeset -L
+              run: |
+                nodeset -L
+                nodeset -LL
+                nodeset --groupsources
