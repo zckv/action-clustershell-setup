@@ -1,6 +1,11 @@
 name: 'Setup ClusterShell'
 description: 'Set up a ClusterShell environment to use the nodeset command'
 
+inputs:
+  cfgdir:
+    description: 'ClusterShell configuration directory'
+    default: $HOME/.config/clustershell
+
 runs:
   using: "composite"
   steps:
@@ -10,28 +15,26 @@ runs:
 
     - name: Create ClusterShell config directories
       shell: bash
-      run: mkdir -p $HOME/.config/clustershell/groups.conf.d
+      run: mkdir -p ${{ inputs.cfgdir }}/groups.conf.d
 
     - name: Create basic cluster group yaml
       shell: bash
       run: |
-        cat <<EOF > $HOME/.config/clustershell/groups.conf.d/cluster.yaml
+        cat <<EOF > ${{ inputs.cfgdir }}/groups.conf.d/cluster.yaml
         cluster:
-            nodes:
-                all: node[1-10]
-                login: node[1-2]
-                compute: node[3-10]
+          all: node[1-10]
+          login: node[1-2]
+          compute: node[3-10]
         EOF
     - name: touch empty file
       shell: bash
-      run: touch $HOME/.config/clustershell/groups
-
+      run: touch ${{ inputs.cfgdir }}/groups
     - name: Create main groups.conf
       shell: bash
       run: |
-        cat <<EOF > $HOME/.config/clustershell/groups.conf
+        cat <<EOF > ${{ inputs.cfgdir }}/groups.conf
         [Main]
         default: cluster
-        confdir: $HOME/.config/clustershell/groups.conf.d $CFGDIR/groups.conf.d
-        autodir: $HOME/.config/clustershell/groups.d $CFGDIR/groups.d
+        confdir: ${{ inputs.cfgdir }}/groups.conf.d $CFGDIR/groups.conf.d
+        autodir: ${{ inputs.cfgdir }}/groups.d $CFGDIR/groups.d
         EOF
